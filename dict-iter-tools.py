@@ -1,14 +1,51 @@
-D1={1: {2: {3: 4, 5: 6}, 3: {4: 5, 6: 7}}, 2: {3: {4: 5}, 4: {6: 7}}}
+zip_file_loc = '/Users/mlopatka/Downloads/100719-1323-martinlo.zip'
+
+D1 = {1: "/Users/mlopatka/Downloads/100719-1323-martinlo/payment_history"}
+
+PATH_FOR_UNZIP = '/Users/mlopatka/fb-dmi/'
+INFERRED_FEATURES = ["ads", "location", "security_and_login_information"]
+
 print(D1)
+
+import os
+import zipfile
+from pathlib import Path
 
 acc = []
 
-def testitem(i):
-    return i % 2 == 0
+def unzip_fb_payload(path_to_payload_zip):
+    global PATH_FOR_UNZIP
+    archive = zipfile.ZipFile(path_to_payload_zip)
+
+    for file in archive.namelist():
+        archive.extract(file, PATH_FOR_UNZIP)
+
+
+
+# def dict_generator(key_list):
+#     key_dict = {}
+#     for i in range(len(key_list)):
+#         key_dict[key_list[i]] = string_to_path(key_list[i])
+#     print(key_dict)
+
+
+def testitem():
+    return True
 
 def infoquantifier(p):
-    return p % 5
+    # p needs to be the path to the directory at the level of the key (folder)
 
+    sizes = []
+
+    htmlfiles = [os.path.join(root, name)
+                 for root, dirs, files in os.walk(p)
+                 for name in files
+                 if name.endswith((".html", ".htm"))]
+
+    for indiv_file in htmlfiles:
+        sizes.append(os.path.getsize(indiv_file))
+
+    return sum(sizes)
 
 def iterdict(d):
     global acc
@@ -21,6 +58,5 @@ def iterdict(d):
             else:
                 acc.append((k, infoquantifier(v)))
 
-iterdict(D1)
 
-print(acc)
+unzip_fb_payload(zip_file_loc)
