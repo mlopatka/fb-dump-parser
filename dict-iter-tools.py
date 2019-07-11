@@ -30,14 +30,7 @@ def unzip_fb_payload(path_to_payload_zip):
     return dict_dir
 
 
-# def dict_generator(key_list):
-#     key_dict = {}
-#     for i in range(len(key_list)):
-#         key_dict[key_list[i]] = string_to_path(key_list[i])
-#     print(key_dict)
-
-
-def testitem():
+def testitem(t):
     return True
 
 def infoquantifier(p):
@@ -66,4 +59,7 @@ def iterdict(d):
             else:
                 acc.append((k, infoquantifier(v)))
 
-print(unzip_fb_payload(zip_file_loc))
+dict_of_fb_stuff = unzip_fb_payload(zip_file_loc)
+iterdict(dict_of_fb_stuff)
+
+print(acc)
