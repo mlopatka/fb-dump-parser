@@ -14,12 +14,20 @@ from pathlib import Path
 acc = []
 
 def unzip_fb_payload(path_to_payload_zip):
+    print(path_to_payload_zip)
     global PATH_FOR_UNZIP
     archive = zipfile.ZipFile(path_to_payload_zip)
 
     for file in archive.namelist():
         archive.extract(file, PATH_FOR_UNZIP)
 
+    #all_sub_dirs = [x[0] for x in os.walk(PATH_FOR_UNZIP)]
+    keys = (next(os.walk(PATH_FOR_UNZIP))[1])
+    dict_dir = {}
+
+    for i in keys:
+        dict_dir[i] = os.path.join(PATH_FOR_UNZIP, i)
+    return dict_dir
 
 
 # def dict_generator(key_list):
@@ -58,5 +66,4 @@ def iterdict(d):
             else:
                 acc.append((k, infoquantifier(v)))
 
-
-unzip_fb_payload(zip_file_loc)
+print(unzip_fb_payload(zip_file_loc))
